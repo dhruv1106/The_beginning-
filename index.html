@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heart and Proposal Animation</title>
+  <style>
+    body {
+      background-image: url('booom.jpg');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: 100% 100%;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    h1, h2, .flower {
+      margin: 0;
+      position: absolute;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: white; /* Change the welcome text to white for better contrast */
+      top: 50%;
+      left: -200px;
+      transform: translateY(-50%);
+      animation: slideIn 2s ease-out forwards;
+      z-index: 2;
+    }
+
+    .heart {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      transform: rotate(-45deg);
+      background-color: red; /* Heart colored red */
+      animation: pulse 1.2s infinite;
+      z-index: 1;
+    }
+
+    .heart:before,
+    .heart:after {
+      content: "";
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background-color: red; /* Add a red color to the circles for the heart */
+      border-radius: 50%;
+    }
+
+    .heart:before {
+      top: -50px;
+      left: 0;
+    }
+
+    .heart:after {
+      top: 0;
+      left: 50px;
+    }
+
+    h2 {
+      font-size: 3rem;
+      color: white; /* White color for the proposal text */
+      opacity: 0;
+      font-family: 'Cursive', sans-serif;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+      transform: translateY(0);
+      animation: fadeInText 3s forwards 3s;
+    }
+
+    .flower {
+      position: absolute;
+      top: 50%;
+      left: 10%;
+      font-size: 3rem;
+      color: blue;
+      opacity: 0;
+      transform: translateY(0);
+      animation: fadeInFlower 2s forwards 6s;
+    }
+
+    .buttons {
+      position: absolute;
+      top: 70%;
+      text-align: center;
+      display: none;
+      opacity: 0;
+      animation: fadeInButtons 2s forwards;
+    }
+
+    .button {
+      padding: 10px 20px;
+      margin: 10px;
+      border: 2px solid white;
+      border-radius: 5px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      background-color: transparent;
+      color: white;
+      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: red;
+      border-color: red;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1) rotate(-45deg);
+      }
+      50% {
+        transform: scale(1.1) rotate(-45deg);
+      }
+    }
+
+    @keyframes slideIn {
+      to {
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    @keyframes fadeInText {
+      to {
+        opacity: 1;
+        transform: translateY(-30px);
+      }
+    }
+
+    @keyframes fadeInFlower {
+      to {
+        opacity: 1;
+        transform: translateY(-30px);
+      }
+    }
+
+    @keyframes fadeInButtons {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .vanish {
+      animation: fadeOut 1s forwards;
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        transform: scale(0.5);
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1 id="animated-heading">Welcome</h1>
+  <div class="heart"></div>
+  <h2 id="love-text">I Love You</h2>
+  <div class="flower" id="flower">🌸</div>
+  <div class="buttons" id="buttons">
+    <button class="button accept" id="accept-button">Accept</button>
+    <button class="button reject" id="reject-button">Reject</button>
+  </div>
+
+  <script>
+    document.querySelector('.heart').addEventListener('click', () => {
+      const heart = document.querySelector('.heart');
+      const heading = document.getElementById('animated-heading');
+      const loveText = document.getElementById('love-text');
+      const flower = document.getElementById('flower');
+      const buttons = document.getElementById('buttons');
+
+      // Add vanish animation to the heart and heading
+      heart.classList.add('vanish');
+      heading.classList.add('vanish');
+
+      // Show "I love you" after heart disappears
+      setTimeout(() => {
+        loveText.style.opacity = '1';
+      }, 3000);
+
+      // Show flower after "I love you" shows
+      setTimeout(() => {
+        flower.style.opacity = '1';
+      }, 6000);
+
+      // Show buttons with animation after the flower appears
+      setTimeout(() => {
+        buttons.style.display = 'block';
+        buttons.style.animation = 'fadeInButtons 2s forwards';
+      }, 6000);
+    });
+
+    // Add event listeners for the buttons
+    document.getElementById('accept-button').addEventListener('click', () => {
+      alert('You accepted the proposal! ❤️');
+    });
+
+    document.getElementById('reject-button').addEventListener('click', () => {
+      alert('You rejected the proposal! 💔');
+    });
+  </script>
+</body>
+</html>
